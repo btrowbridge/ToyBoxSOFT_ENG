@@ -7,6 +7,7 @@ public class CubeManager : MonoBehaviour {
 
     public void rotateSquare(int v, int h) { }
     
+
 	// Use this for initialization
 	void Start () {
 	

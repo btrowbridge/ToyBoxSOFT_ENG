@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Damage : Collectable {
 
-    public int damage;
+    public int damageValue;
 
 	// Use this for initialization
 	void Start () {

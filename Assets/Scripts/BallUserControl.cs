@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-
+//Note: This is a unity standard asset
 namespace UnityStandardAssets.Vehicles.Ball
 {
     public class BallUserControl : MonoBehaviour

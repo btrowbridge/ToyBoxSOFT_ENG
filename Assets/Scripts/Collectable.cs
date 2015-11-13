@@ -11,7 +11,9 @@ public abstract class Collectable : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
     }
-    void OnTriggerEnter(Collider other) { }
+    void OnTriggerEnter(Collider other) { 
+		gameObject.SetActive (false);
+	}
 
     // Update is called once per frame
     void Update()
