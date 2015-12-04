@@ -17,10 +17,10 @@ public class Player : Ball {
 		//find the objects in the game scene used for reference
 		gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		cubeManager = GameObject.FindGameObjectWithTag ("Cube").GetComponent<CubeManager> ();
-		triggerWalls = GameObject.FindGameObjectWithTag("triggerWalls");
+		triggerWalls = GameObject.FindGameObjectWithTag("TriggerWalls");
 
 
-		cubeLength = cubeManager.gameObject.transform.lossyScale.x; //length is equal to the scale of the cube
+		
 	}
 	
 	// Update is called once per frame
@@ -32,29 +32,26 @@ public class Player : Ball {
 	//Note: we use this for smoothe rotation of the cube after exiting a trigger wall
 	public void OnTriggerExit(Collider other) {
 
+        
 
 		// recognize which trigger wall the player hits
-		if (other.tag == "up") {
+		if (other.tag == "Up") {
+            cubeManager.target = other.transform;
+            cubeManager.up = true; //cube movement flag
 
-			cubeManager.up = true; //cube movement flag
+            //move the trigger walls to the nextlocation for the cube
+        } else if (other.tag == "Down") {
+            cubeManager.target = other.transform;
+            cubeManager.down = true;
 
-			//move the trigger walls to the nextlocation for the cube
-			triggerWalls.transform.position.x += cubeLength; 
+        } else if (other.tag == "Left") {
+            cubeManager.target = other.transform;
+            cubeManager.left = true;
 
-		} else if (other.tag == "down") {
-			cubeManager.down = true;
-			triggerWalls.transform.position.x -= cubeLength;
-
-		} else if (other.tag == "left") {
-			cubeManager.left = true;
-			triggerWalls.transform.position.z += cubeLength;
-
-		} else if (other.tag == "right") {
-			cubeManager.right = true;
-			triggerWalls.transform.position.z -= cubeLength;
-
-		}
-
+        } else if (other.tag == "Right") {
+            cubeManager.target = other.transform;
+            cubeManager.right = true;
+        }
 
 		
 	}
@@ -64,13 +61,13 @@ public class Player : Ball {
 	public void OnTrigerEnter(Collider other) {
 	
 		//we Identify the apropriate collectable and execute the apropriate game manager function
-		if (other is Token) {
+		if (other.gameObject.GetComponent<Token>()) {
 			Token token = other.GetComponent<Token> ();
 			gameManager.playerAddsToScore (token.scoreValue); //add score
-		} else if (other is Damage) {
+		} else if (other.gameObject.GetComponent<Damage>()) {
 			Damage damage = other.GetComponent<Damage>();
 			gameManager.playerTakesDamage(damage.damageValue); //take damage
-		} else if(other is PowerUp){
+		} else if(other.gameObject.GetComponent<PowerUp>()){
 			//do power up stuff
 			Debug.Log("Player recieves a power up!");
 		}

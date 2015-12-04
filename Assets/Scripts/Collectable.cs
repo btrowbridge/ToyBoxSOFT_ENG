@@ -12,7 +12,7 @@ public abstract class Collectable : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
     void OnTriggerEnter(Collider other) { 
-		if (other is Player)
+		if (other.gameObject.GetComponent<Player>())
 			gameObject.SetActive (false);
 	}
 

@@ -21,9 +21,9 @@ public class GameManager : MonoBehaviour {
     public void initializeGame() { 
 		playerScore = 0;
 		playerHealth = 10;
-		healthText = playerHealth;
-		scoreText = playerScore;
-		timeText = 0;
+		healthText.text = playerHealth.ToString();
+		scoreText.text = playerScore.ToString();
+		timeText.text = 0.ToString();
 	}
 
 
@@ -35,13 +35,13 @@ public class GameManager : MonoBehaviour {
 	//reset game and start the timer
 	void GameStart(){
 		initializeGame ();			//reset game data
-		timer = new Stopwatch ();	//create new stopwatch
-		timer.Start()				//start the timer
+		timer = new Stopwatch ();   //create new stopwatch
+        timer.Start();				//start the timer
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		timeText = timer.Elapsed; //updates the timer text
+		timeText.text = timer.Elapsed.ToString(); //updates the timer text
 
 		//Check win and lose conditions
 		if (playerScore == winScore) {
@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour {
 	//called when player takes damage
 	public void playerTakesDamage (int value){
 		playerHealth -= value;
-		healthText = playerHealth; //update text
+		healthText.text = playerHealth.ToString(); //update text
 	}
 
 	//called when Player scores points
 	public void playerAddsToScore (int value){
 		playerScore += value;
-		scoreText = playerScore; //update text
+		scoreText.text = playerScore.ToString(); //update text
 
 	}
 
