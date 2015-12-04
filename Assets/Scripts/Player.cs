@@ -4,11 +4,12 @@ using UnityStandardAssets.Vehicles.Ball;
 
 public class Player : Ball {
 
-	private float cubeLength; // reference to the cube length
+	
     
 	public GameManager gameManager; //reference to the gameManager
 	public CubeManager cubeManager; // reference to the cube manager
 	public GameObject triggerWalls; //reference to the trigger walls
+    
 
 
 	// Use this for initialization
@@ -17,7 +18,7 @@ public class Player : Ball {
 		//find the objects in the game scene used for reference
 		gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		cubeManager = GameObject.FindGameObjectWithTag ("Cube").GetComponent<CubeManager> ();
-		triggerWalls = GameObject.FindGameObjectWithTag("TriggerWalls");
+        triggerWalls = GameObject.FindGameObjectWithTag("TriggerWalls");
 
 
 		
@@ -36,7 +37,7 @@ public class Player : Ball {
 
 		// recognize which trigger wall the player hits
 		if (other.tag == "Up") {
-            cubeManager.target = other.transform;
+            cubeManager.target = other.gameObject.transform;
             cubeManager.up = true; //cube movement flag
 
             //move the trigger walls to the nextlocation for the cube
@@ -53,7 +54,7 @@ public class Player : Ball {
             cubeManager.right = true;
         }
 
-		
+        cubeManager.rotateGhost();
 	}
 
 	//called when player enters a trigger
