@@ -19,44 +19,38 @@ public class CubeManager : MonoBehaviour {
 		//find referenced objects in game scene
 		triggerWalls = GameObject.FindGameObjectWithTag ("TriggerWalls");
 		player = GameObject.FindGameObjectWithTag ("Player");
-
+        
 
     }
 
     // Update is called once per frame
     void FixedUpdate () {
-
-        if (up) {
+        /*
+        if (transform == ghostBox.transform)
+        {
+            Stop();
+        }
+        else if (up) {
             transform.RotateAround(target.position, Vector3.left, rotateSpeed);
-
         }
         else if (down) {
             transform.RotateAround(target.position, Vector3.right, rotateSpeed);
-            if (transform == ghostBox.transform)
-            {
-                Stop();
-            }
+
         }
         else if (left) {
             transform.RotateAround(target.position, Vector3.back, rotateSpeed);
-            if (transform == ghostBox.transform)
-            {
-                Stop();
-            }
+
         }
         else if (right) {
             transform.RotateAround(target.position, Vector3.forward, rotateSpeed);
-            if (transform == ghostBox.transform)
-            {
-                Stop();
-            }
-        }
 
+        }
+        */
        
 
 
     }
-    public void rotateGhost() {
+    public void rotate() {
         if (up)
         {
             transform.RotateAround(target.position, Vector3.left, 90);
@@ -74,6 +68,7 @@ public class CubeManager : MonoBehaviour {
         {
             transform.RotateAround(target.position, Vector3.forward, 90);
         }
+        Stop();
     }
     void Stop() {
         UnityEngine.Debug.Log("Box should stop");

@@ -54,7 +54,7 @@ public class Player : Ball {
             cubeManager.right = true;
         }
 
-        cubeManager.rotateGhost();
+        cubeManager.rotate();
 	}
 
 	//called when player enters a trigger
