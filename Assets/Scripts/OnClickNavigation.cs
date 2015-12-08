@@ -6,7 +6,12 @@ public class OnClickNavigation : MonoBehaviour {
 
 
 
-    public void OnClick() { }
-    // Use this for initialization
+    public void LoadLevel(int index) {
+        Application.LoadLevel(index);
+    }
+    public void Quit() {
+        Application.Quit();
+    }
+
 
 }

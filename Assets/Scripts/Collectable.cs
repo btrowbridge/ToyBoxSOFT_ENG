@@ -5,16 +5,13 @@ using System.Collections;
 
 public abstract class Collectable : MonoBehaviour
 {
-    public Player player;
+    public GameObject player;
     // Use this for initialization
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
-    void OnTriggerEnter(Collider other) { 
-		if (other.gameObject.GetComponent<Player>())
-			gameObject.SetActive (false);
-	}
+
 
     // Update is called once per frame
     void Update()

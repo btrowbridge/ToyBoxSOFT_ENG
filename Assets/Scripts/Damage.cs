@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Damage : Collectable {
 
-    public int damageValue;
+    public static int damageValue = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -12,7 +12,7 @@ public class Damage : Collectable {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+        transform.rotation = Random.rotationUniform;
 	}
 }

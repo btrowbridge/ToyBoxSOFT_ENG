@@ -26,6 +26,7 @@ namespace UnityStandardAssets.Vehicles.Ball
             if (Camera.main != null)
             {
                 cam = GameObject.FindGameObjectWithTag("MainCamera");
+                
             }
             else
             {
@@ -38,6 +39,7 @@ namespace UnityStandardAssets.Vehicles.Ball
 
         private void Update()
         {
+            cam.transform.localPosition = transform.position + new Vector3(0, 20, -10);
             // Get the axis and jump input.
 
             float h = Input.GetAxis("Horizontal");
@@ -63,6 +65,7 @@ namespace UnityStandardAssets.Vehicles.Ball
         {
             // Call the Move function of the ball controller
             ball.Move(move, jump);
+             
             jump = false;
         }
     }
