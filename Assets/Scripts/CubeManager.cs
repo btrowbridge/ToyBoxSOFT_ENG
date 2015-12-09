@@ -3,15 +3,18 @@ using System.Collections;
 
 public class CubeManager : MonoBehaviour {
 
-	
+
+    private bool rotating;
 
     public bool up, down, left, right = false;	//Flags for cube movement
-	public float rotateSpeed = 3;               //rotation speed of cube
+	
+    public float degrees;
+    public float rotateTime;
 
     public GameObject ghostBox;
 	public GameObject triggerWalls; // reference to trigger walls
 	public GameObject player;		//reference to player object
-    public Transform target;   //used for the target rotation
+    
    
    
                                 // Use this for initialization
@@ -24,55 +27,48 @@ public class CubeManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
-        /*
-        if (transform == ghostBox.transform)
-        {
-            Stop();
-        }
-        else if (up) {
-            transform.RotateAround(target.position, Vector3.left, rotateSpeed);
-        }
-        else if (down) {
-            transform.RotateAround(target.position, Vector3.right, rotateSpeed);
-
-        }
-        else if (left) {
-            transform.RotateAround(target.position, Vector3.back, rotateSpeed);
-
-        }
-        else if (right) {
-            transform.RotateAround(target.position, Vector3.forward, rotateSpeed);
-
-        }
-        */
-       
-
+    void Update () {
 
     }
-    public void rotate() {
-        if (up)
-        {
-            transform.RotateAround(target.position, Vector3.left, 90);
-        }
-        else if (down)
-        {
-            transform.RotateAround(target.position, Vector3.right, 90);
+    public IEnumerator rotate(Transform target) {
+        //testing another algorithm
+        if (rotating) { yield break; }
+        rotating = true;
 
-        }
-        else if (left)
+        //Decide which axis to rotate
+        Vector3 rotateAxis = Vector3.up;
+        if (up) { rotateAxis = Vector3.left; }
+        else if (down) { rotateAxis = Vector3.right; }
+        else if (left) { rotateAxis = Vector3.back; }
+        else if (right) { rotateAxis = Vector3.forward; }
+
+        var otherTransform = target.transform;
+        var startRotation = transform.rotation;
+        var startPosition = transform.position;
+        transform.RotateAround(otherTransform.position, rotateAxis, degrees);
+        var endRotation = transform.rotation;
+        var endPosition = transform.position;
+        transform.rotation = startRotation;
+        transform.position = startPosition;
+
+        var rate = degrees / rotateTime;
+        for (float i = 0.0f; i < degrees; i += Time.deltaTime * rate)
         {
-            transform.RotateAround(target.position, Vector3.back, 90);
+            yield return 0;
+            transform.RotateAround(otherTransform.position, rotateAxis, Time.deltaTime * rate);
         }
-        else if (right)
-        {
-            transform.RotateAround(target.position, Vector3.forward, 90);
-        }
+
+        transform.rotation = endRotation;
+        transform.position = endPosition;
+        rotating = false;
+     
         Stop();
     }
+    //when stopping adjust the trigger wall
     void Stop() {
         UnityEngine.Debug.Log("Box should stop");
-
+        triggerWalls.transform.position = transform.position;
+        /*
             if (up)
             {
                 triggerWalls.transform.position += Vector3.forward * gameObject.transform.lossyScale.x;
@@ -89,6 +85,7 @@ public class CubeManager : MonoBehaviour {
             {
                 triggerWalls.transform.position += Vector3.right * gameObject.transform.lossyScale.x;
             }
+            */
             up = false;
             down = false;
             left = false;

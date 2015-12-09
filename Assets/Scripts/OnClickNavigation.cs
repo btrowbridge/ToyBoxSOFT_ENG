@@ -12,6 +12,8 @@ public class OnClickNavigation : MonoBehaviour {
     public void Quit() {
         Application.Quit();
     }
-
+    public void resetScores() {
+        PlayerPrefs.DeleteAll();
+    }
 
 }

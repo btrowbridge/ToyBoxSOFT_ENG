@@ -26,7 +26,9 @@ public class Player : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (transform.position.y <= -10) {
+            transform.position = cubeManager.transform.position + new Vector3(0, 15, 0);
+        }
 	}
 
 	//when player exits a collider
@@ -37,24 +39,25 @@ public class Player : MonoBehaviour{
 
 		// recognize which trigger wall the player hits
 		if (other.tag == "Up") {
-            cubeManager.target = other.gameObject.transform;
+            
             cubeManager.up = true; //cube movement flag
-            cubeManager.rotate();
-            //move the trigger walls to the nextlocation for the cube
+            //start rotation corouting
+            StartCoroutine_Auto(cubeManager.rotate(other.gameObject.transform));
+            
         } else if (other.tag == "Down") {
-            cubeManager.target = other.transform;
+            
             cubeManager.down = true;
-            cubeManager.rotate();
+            StartCoroutine_Auto(cubeManager.rotate(other.gameObject.transform));
 
         } else if (other.tag == "Left") {
-            cubeManager.target = other.transform;
+            
             cubeManager.left = true;
-            cubeManager.rotate();
+            StartCoroutine_Auto(cubeManager.rotate(other.gameObject.transform));
 
         } else if (other.tag == "Right") {
-            cubeManager.target = other.transform;
+            
             cubeManager.right = true;
-            cubeManager.rotate();
+            StartCoroutine_Auto(cubeManager.rotate(other.gameObject.transform));
         } 
 
         

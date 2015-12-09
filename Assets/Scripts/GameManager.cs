@@ -6,7 +6,7 @@ using System.Diagnostics;
 public class GameManager : MonoBehaviour {
 
 	public int winScore = 1; 	//used for win condition
-	[SerializeField]private float timer = 0; 	//used for player record time system
+	[SerializeField]private float timer = 0.0f; 	//used for player record time system
     [SerializeField]private bool counting = true;
 
     public Text scoreText;		//Displays score text
@@ -17,29 +17,36 @@ public class GameManager : MonoBehaviour {
     public Text gameOverText;
 
 	public int playerScore = 0;	//players score for win condition
-	public int playerStartHealth = 50; //player's health for lose condition
-    public int playerHealth;
+
+    public int playerHealth = 10; //player's health for lose condition
 
 
 
 	// Use this for initialization
 	void Awake () {
-        playerScore = 0;
-        playerHealth = playerStartHealth;
         healthText.text = "Health: " + playerHealth.ToString();
         scoreText.text = "Score: " + playerScore.ToString();
         timeText.text = "Time: " + timer;
         counting = true;
+        StartCoroutine(startCounting());
     }
-
+    //timer
+    IEnumerator startCounting() {
+       UnityEngine.Debug.Log("Counting");
+        while (counting)
+        {
+            UnityEngine.Debug.Log("Counted");
+            yield return new WaitForSeconds (1);
+            timer++;
+            timeText.text = "Time: " + timer; //updates the timer text
+        }
+        
+    }
     // Update is called once per frame
     void Update()
     {
+        timeText.text = "Time: " + timer;
 
-       if (counting) { 
-           timer += Time.deltaTime;
-           timeText.text = "Time: " + timer.ToString(); //updates the timer text
-        }
     }
 
     //called when player takes damage
@@ -115,9 +122,9 @@ public class GameManager : MonoBehaviour {
     public void GameWin()
     {
 
-        
+        counting = false;
 
-        float timeScore = timer; //convert score to milliseconds
+        float timeScore = (float)timer; //convert score to milliseconds
         
         addToScoreBoard(timeScore); //add time to scoreboard
 
@@ -130,7 +137,7 @@ public class GameManager : MonoBehaviour {
     //called on game lost
     public void GameLose (){
         //stop the timer
-        
+        counting = false;
         //call the gui
         gameOverText.text = "You Lose! \n Play again?";
         gameOverScreen.SetActive(true);
